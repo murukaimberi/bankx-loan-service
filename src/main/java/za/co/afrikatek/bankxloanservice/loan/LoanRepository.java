@@ -8,5 +8,5 @@ package za.co.afrikatek.bankxloanservice.loan;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-interface LoanRepository extends JpaRepository<Loan, Long> {
+public interface LoanRepository extends JpaRepository<Loan, Long> {
 }

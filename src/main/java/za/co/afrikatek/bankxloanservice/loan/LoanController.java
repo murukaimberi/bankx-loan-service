@@ -6,6 +6,7 @@
 
 package za.co.afrikatek.bankxloanservice.loan;
 
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class LoanController {
      * @throws URISyntaxException
      */
     @PostMapping("")
-    public ResponseEntity<Loan> createLoan(@RequestBody Loan loan) throws URISyntaxException {
+    public ResponseEntity<Loan> createLoan(@RequestBody @Valid Loan loan) throws URISyntaxException {
         LOG.info("Rest request to create a loan: {}", loan);
         var savedLoan = loanService.createLoan(loan);
         return ResponseEntity.created(new URI("/loans/" + savedLoan.getLoanId())).body(savedLoan);

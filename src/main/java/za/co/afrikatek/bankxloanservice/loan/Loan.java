@@ -15,7 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-
+import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -25,9 +25,11 @@ public class Loan {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loanId;
     @NotNull
+    @Positive(message = "Loan amount must be greater than zero")
     @Column(precision = 21, scale = 2, nullable = false)
     private BigDecimal loanAmount;
     @NotNull
+    @Positive(message = "Term must be greater than zero")
     @Column(nullable = false)
     private Integer term;
 
