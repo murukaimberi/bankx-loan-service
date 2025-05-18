@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * REST controller for managing {@link za.co.afrikatek.bankxloanservice.payment.PaymentController}.
+ */
 @RestController
 @RequestMapping("/payments")
 public class PaymentController {
@@ -27,6 +30,14 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
+    /**
+     * {@code POST  /payments} : Create a new payment.
+     *
+     * @param payment the Payment to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new Payment, or with status
+     * {@code 400 (Bad Request)} if the Payment has already an ID, or {@code 400 (Bad Request)} when payment is made for
+     * a loan that has already been settled.
+     */
     @PostMapping("")
     public ResponseEntity<Payment> createPayment(@RequestBody @Valid Payment payment) {
         LOG.info("Rest request to make a payment to loan : {}", payment);

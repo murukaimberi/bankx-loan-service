@@ -16,6 +16,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
+/**
+ * REST controller for managing {@link za.co.afrikatek.bankxloanservice.loan.LoanController}.
+ */
 @RestController
 @RequestMapping("/loans")
 public class LoanController {
@@ -28,8 +31,9 @@ public class LoanController {
     /**
      *
      * @param loan the loan request body to create the loan
-     * @return {@code 201} when
-     * @throws URISyntaxException
+     * @return {@code 201} with new saved Loan object. It returns {@code 400 (Bad Request)} loan object already contains
+     * an id.
+     * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
     public ResponseEntity<Loan> createLoan(@RequestBody @Valid Loan loan) throws URISyntaxException {
@@ -41,7 +45,8 @@ public class LoanController {
     /**
      *
      * @param loanId the id of the loan to be retrieved
-     * @return
+     * @return {@code 200} and the Loan object with the specified id parameter or
+     * {@code 404 (Not Found)} for an id not corresponding to any Loan.
      */
     @GetMapping("/{loanId}")
     public ResponseEntity<Loan> getLoan(@PathVariable Long loanId) {

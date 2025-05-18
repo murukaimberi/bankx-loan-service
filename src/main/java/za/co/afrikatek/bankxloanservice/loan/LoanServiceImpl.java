@@ -49,7 +49,7 @@ public class LoanServiceImpl implements LoanService {
             throw new Status400BadRequestException("Loan settled.", "Loan", Map.of("status", List.of("Loan has been settled.")));
         }
         BigDecimal loanAmount = loan.getLoanAmount();
-        if (loanAmount.compareTo(paymentAmount) >= 0) {
+        if (loanAmount.compareTo(paymentAmount) > 0) {
             loan.setLoanAmount(loanAmount.subtract(paymentAmount));
             return loanRepository.save(loan);
         }
