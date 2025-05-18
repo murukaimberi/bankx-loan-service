@@ -79,4 +79,19 @@ public class PaymentServiceTest {
         Assertions.assertThrows(ConstraintViolationException.class, () -> paymentService.createPayment(payment));
     }
 
+    @Test
+    void whenMakePayment_And_Amount_Settles_Loan_ThenLoanAmountZero() throws Exception {
+        Payment payment = new Payment();
+        payment.setLoanId(loan.getLoanId());
+        payment.setPaymentAmount(loan.getLoanAmount());
+        Payment savedPayment = paymentService.createPayment(payment);
+        Assertions.assertNotNull(savedPayment);
+        Assertions.assertNotNull(savedPayment.getPaymentId());
+        Assertions.assertEquals(payment.getPaymentAmount(), savedPayment.getPaymentAmount());
+        Assertions.assertEquals(loan.getLoanId(), savedPayment.getLoanId());
+        Optional<Loan> optionalLoan = loanService.getLoanById(payment.getLoanId());
+        Assertions.assertTrue(optionalLoan.isPresent());
+        Assertions.assertEquals(LoanStatus.SETTLED, optionalLoan.get().getStatus());
+        Assertions.assertEquals(0, BigDecimal.ZERO.compareTo(optionalLoan.get().getLoanAmount()));
+    }
 }
